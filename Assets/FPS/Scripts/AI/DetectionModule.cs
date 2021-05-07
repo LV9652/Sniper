@@ -15,6 +15,7 @@ namespace Unity.FPS.AI
 
         [Tooltip("The max distance at which the enemy can attack its target")]
         public float AttackRange = 10f;
+        // public float AttackRange = 1f;
 
         [Tooltip("Time before an enemy abandons a known target that it can't see anymore")]
         public float KnownTargetTimeout = 4f;
@@ -97,6 +98,12 @@ namespace Unity.FPS.AI
             IsTargetInAttackRange = KnownDetectedTarget != null &&
                                     Vector3.Distance(transform.position, KnownDetectedTarget.transform.position) <=
                                     AttackRange;
+            /*
+            if (IsTargetInAttackRange)
+            {
+                Debug.Log(IsTargetInAttackRange);
+            }        
+            */
 
             // Detection events
             if (!HadKnownTarget &&
