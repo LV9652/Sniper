@@ -6,6 +6,7 @@ public class EnemyCreator : MonoBehaviour
 {
     public GameObject enemyMake;
     public double spawn_interval;
+    public Vector3 spawn_position;
     double nasru;
 
     // Start is called before the first frame update
@@ -22,8 +23,8 @@ public class EnemyCreator : MonoBehaviour
         {
             nasru = spawn_interval;
             GameObject go = GameObject.Instantiate(enemyMake);
-            go.transform.position = transform.position;
-            // go.transform.position = new Vector3(6.5f, 0.5f, 0);
+            // go.transform.position = transform.position;
+            go.transform.position = spawn_position;
         }
     }
 }
