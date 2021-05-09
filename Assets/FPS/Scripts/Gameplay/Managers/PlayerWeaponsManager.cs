@@ -15,7 +15,7 @@ namespace Unity.FPS.Gameplay
             PutDownPrevious,
             PutUpNew,
         }
-
+        public GameObject scopeOverlay;
         [Tooltip("List of weapon the player will start with")]
         public List<WeaponController> StartingWeapons = new List<WeaponController>();
 
@@ -286,13 +286,25 @@ namespace Unity.FPS.Gameplay
             if (m_WeaponSwitchState == WeaponSwitchState.Up)
             {
                 WeaponController activeWeapon = GetActiveWeapon();
-                if (IsAiming && activeWeapon)
+                if (IsAiming && activeWeapon && !(activeWeapon.WeaponName).Equals("Sniper"))
                 {
+                    Debug.Log("Text: " + activeWeapon.WeaponName);
                     m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
                         AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
                         AimingAnimationSpeed * Time.deltaTime);
                     SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView,
                         activeWeapon.AimZoomRatio * DefaultFov, AimingAnimationSpeed * Time.deltaTime));
+                    scopeOverlay.SetActive(false);
+                }
+                else if (IsAiming && activeWeapon && (activeWeapon.WeaponName).Equals("Sniper"))
+                {
+                    m_WeaponMainLocalPosition = Vector3.Lerp(m_WeaponMainLocalPosition,
+                        AimingWeaponPosition.localPosition + activeWeapon.AimOffset,
+                        AimingAnimationSpeed * Time.deltaTime);
+                    SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView,
+                        activeWeapon.AimZoomRatio * DefaultFov * 0.1f, AimingAnimationSpeed * Time.deltaTime));
+
+                    scopeOverlay.SetActive(true);
                 }
                 else
                 {
@@ -300,6 +312,7 @@ namespace Unity.FPS.Gameplay
                         DefaultWeaponPosition.localPosition, AimingAnimationSpeed * Time.deltaTime);
                     SetFov(Mathf.Lerp(m_PlayerCharacterController.PlayerCamera.fieldOfView, DefaultFov,
                         AimingAnimationSpeed * Time.deltaTime));
+                    scopeOverlay.SetActive(false);
                 }
             }
         }
