@@ -188,7 +188,7 @@ MonoBehaviour:
     type: 3}
   DelayBetweenShots: 0.5
   BulletSpreadAngle: 0
-  BulletsPerShot: 1
+  BulletsPerShot: 50
   RecoilForce: 2
   AimZoomRatio: 1
   AimOffset: {x: 0, y: 0.13, z: 0}
